@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "82fqprCJjmRmcD9C+KNC9NtKOXppJ1fOLXiYJ7xUQCdMZcfEGCtGrIDRNbY2ghuf48hiHQSe1QfcMXtKDcyXiA==",
+  "dgSpecHash": "ZR8Jo+eVu1Alcll9lYHOpJJzpiKZ+JzWsBEDg1Lj0DlHPjl5+F+RUmoyf04elQE2wT7nutFfVPbCE1hdj9W7Fw==",
   "success": true,
   "projectFilePath": "C:\\Users\\sindr\\OneDrive\\Dokumenter\\Jobb\\Vipps\\backend\\backend.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\sindr\\.nuget\\packages\\htmlagilitypack\\1.11.54\\htmlagilitypack.1.11.54.nupkg.sha512",
     "C:\\Users\\sindr\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\sindr\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\sindr\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
