@@ -1,47 +1,86 @@
 <script>
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+
+  import confetti from 'canvas-confetti';
+  import Result from './lib/Result.svelte';
+
+  let topic = "";
+  let resultText = "";
+  let loading = false;
+  
+  //Reset confetti AND resulttext when topic changes
+  $: if (topic != null) {
+    confetti.reset();
+    resultText = "";
+  }
+  
+  const handleSubmit = () => {
+    if (topic === "") {
+        resultText = 'Please enter a topic.';
+        return;
+    }
+    getTopicCount();   
+  }
+
+  async function getTopicCount() { //async function to fetch data from backend api
+      try {
+          loading = true;
+          //Filtering out special characters with encodeURIComponent
+          let url = "https://localhost:4000/api/wikipedia/"+ encodeURIComponent(topic);
+
+          const response = await fetch(url);
+          if (response.ok) {
+              const result = await response.json();
+              resultText = "The topic '" + result.topic +"' appears " + result.count + " times.";
+             
+              if (result.count > 0) {
+                confetti({
+                  particleCount: 150,
+                  spread: 100,
+                });
+              }
+            
+          } else {
+              throw new Error('Error fetching data.');
+          }
+      } catch (error) {
+          resultText = "Could not establish connection to API";
+          
+      } finally {
+          loading = false;
+      }
+  }
 </script>
 
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  <h1>Wikipedia Topic Counter</h1>
+  <div class ="container">
+    <form on:submit|preventDefault={handleSubmit}>
+      <input type="text" bind:value={topic} placeholder="Enter a Wikipedia topic" />
+      <button type="submit">Find occurences</button>
+    </form>
+    <Result {resultText} {loading} />
+  </div> 
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  main {
+      text-align: center;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+  .container {
+    text-align: center;
+      padding: 1em;
+      max-width: 240px;
+      margin: 0 auto;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
+
+  input[type="text"] {
+      width: 100%;
+      padding: 0.5em;
   }
-  .read-the-docs {
-    color: #888;
+  button {
+      width: 100%;
+      padding: 0.5em;
+      margin-top: 0.5em;
   }
+
 </style>
