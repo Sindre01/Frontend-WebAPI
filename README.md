@@ -1,4 +1,4 @@
-# VippsCase
+
 ## Backend
 Web API in .NET with c# that fetches topic from Wikipedia API and count how many occurances of topic in the page topic
 ## Frontend
